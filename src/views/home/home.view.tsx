@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import type TProduct from '../../types/product';
 import CatalogProduct from '../../components/catalog-product';
-import { useShopCart } from '../../components/shop-cart-context';
 import useProducts from './use-home-view';
+import { addToShopCart } from '../../stores/shop-cart.store';
 
 type TProductsGridProps = {
   products: TProduct[];
@@ -26,11 +26,10 @@ const ProductsGrid = ({ products, onAddToCart }: TProductsGridProps) => {
 
 const Home = () => {
   const { products } = useProducts();
-  const { addToShopCart } = useShopCart();
 
   const onAddToCart = useCallback((product: TProduct) => {
     addToShopCart(product.id);
-  }, [addToShopCart]);
+  }, []);
 
   console.log('Rendering <HomePage />');
 

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { useShopCart } from './shop-cart-context';
+import { useShopCartStore } from "../stores/shop-cart.store";
 
 function AppHeader() {
-  const { shopCart, isLoading } = useShopCart();
-  console.log('Rendering <AppHeader /> with totalItems', !isLoading ? shopCart.totalItems: '(no shop cart yet)');
+  const { shopCart, isLoading } = useShopCartStore();
+  console.log('Rendering <AppHeader /> with totalItems', !isLoading ? shopCart?.totalItems: '(no shop cart yet)');
 
   return (
     <header>
@@ -15,7 +15,7 @@ function AppHeader() {
           {
             !isLoading ?
               <Link to="/shop-cart" className="text-xl font-bold leading-7 text-white sm:text-3xl sm:truncate">
-                Cart ({shopCart.totalItems})
+                Cart ({shopCart?.totalItems})
               </Link>
             :
             <div className="text-lg font-bold leading-7 text-white sm:text-xl sm:truncate">loading...</div>

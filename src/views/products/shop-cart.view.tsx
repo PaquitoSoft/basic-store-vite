@@ -1,13 +1,13 @@
 import ItemsGrid from '../../components/items-grid';
 import ShopCartItem from '../../components/shop-cart-item';
-import { useShopCart } from '../../components/shop-cart-context';
+import { useShopCartStore, updateInShopCart, removeFromShopCart } from '../../stores/shop-cart.store';
 
 function ShopCartView() {
-  const { shopCart, updateInShopCart, removeFromShopCart } = useShopCart();
+  const { shopCart } = useShopCartStore();
   console.log('Rendering <ShopCartView />');
   return (
     <ItemsGrid title="ShopCart">
-      {shopCart.items.map((item) => (
+      {shopCart?.items.map((item) => (
         <ShopCartItem
           key={item.id}
           item={item}
