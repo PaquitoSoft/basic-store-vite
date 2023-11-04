@@ -1,26 +1,19 @@
-import { create } from 'zustand';
+import { signal } from "@preact/signals-react";
 import type { TShopCart } from '../types/shop-cart';
 import { addToCart, getShopCart, removeFromCart, updateInCart } from '../api/shop-cart.api';
 
-export type TShopCartStore = {
-  shopCart?: TShopCart;
-  isLoading: boolean;
-}
-
-export const useShopCartStore = create<TShopCartStore>(() => ({
-  shopCart: undefined,
-  isLoading: true,
-}));
+export const shopCart = signal<TShopCart | undefined>(undefined);
+export const isLoading = signal(true);
 
 const callApi = async (caller: () => Promise<TShopCart>) => {
   try {
-    useShopCartStore.setState(() => ({ isLoading: true }));
-    const shopCart = await caller();
-    useShopCartStore.setState(() => ({ shopCart }));
+    isLoading.value = true;
+    const _shopCart = await caller();
+    shopCart.value = _shopCart;
   } catch(error) {
     console.error(error);
   } finally {
-    useShopCartStore.setState(() => ({ isLoading: false }));
+    isLoading.value = false;
   }
 };
 
